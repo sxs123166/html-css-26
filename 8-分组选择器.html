@@ -1,0 +1,266 @@
+1.分组选择器
+是将不同的选择器组合在一起。使用逗号分割。
+也称为并集选择器
+
+使用场景：
+  1.给多个元素设置相同的样式
+
+  div, 
+  p {
+    color: red;
+  }
+
+  分组选择器/并集选择器
+
+  .content img, .content video {
+    width: 100%;
+  }
+  
+
+2.伪类选择器
+  选择元素的特定状态或结构位置，符号是冒号(:)
+
+  1)状态伪类选择器
+    根据用户交互或状态变化选择。比如：鼠标经过链接、表单获得焦点等
+
+    使用场景：
+      1.设置链接不同状态的样式
+
+      链接伪类                 作用
+       a:link               未访问链接的默认样式
+       a:visited            已访问链接的样式
+       a:hover              鼠标悬停在链接上的反馈
+       a:active             点击链接时的样式
+
+       a:link {
+        color: red;
+       }
+
+       a:visited {
+        color: orange;
+       }
+
+       a: hover {
+        color: green
+       }
+
+       a: active {
+
+       }
+       一定要按这个顺序写，否则会有问题
+
+       a:hover, a:visited {
+        color: blue;
+       }
+
+       比如：
+       a {
+        text-decoration: none;
+        color: #00;
+       }
+
+       a: hover {
+        color: #00f;
+        text-decoration: underline;
+       }
+    1.2 用户行为伪类
+     用户以某种方式和文档交互的时候应用，这些用户行为伪类，有事叫做动态伪类
+
+     使用场景：
+      1.鼠标经过元素的时候，修改样式
+      2.表单获得焦点的时候
+
+      动态伪类                   作用
+      :hover                  鼠标经过元素
+      :focus                  获得焦点的元素（表单）
+
+      .box {
+
+      }
+
+      .box:hover {  /* 注意不要有空格，否则会有问题 */
+        background-color: red;
+      }
+
+      .search:focus {
+        background-color: red;
+        width: 200px;
+      }
+      
+  2)结构伪类
+    根据元素的位置选择，选择第5个 第10个元素，选择前三个元素等
+
+    根据元素的位置选择目标元素。
+
+    使用场景：
+      1.选择第一个或者最后一个或者第n个元素
+
+         结构伪类              作用
+      :first-child          选择第一个子元素
+      :last-child           选择最后一个子元素
+      :nth-child(n)         选择第n个子元素
+
+      n的取值可以是
+        数字。从 1 开始
+        关键字。odd奇数 even偶数
+        公式
+
+        :nth-child(3n) 3的倍数，第 3、6、9。。。的元素
+        :nth-child(n+2) 第二个以及后面的元素
+        :nth-child(-n+3) 前面 3 个元素
+        注意公式的n取值从0开始计算
+
+      <ul>
+        <li>第1个</li>
+        <li>第2个</li>
+        <li>第3个</li>
+        <li>第4个</li>
+        <li>第5个</li>
+      </ul>
+
+      ul li:first-child {
+        color: red;
+      }
+
+      ul li:nth-child(3) {
+        color: red;
+      }
+
+      ul li:last-child {
+        color: red;
+      }
+
+      .ul2 li:nth-child(even) {
+        color: red;
+      }
+
+      .ul2 li:nth-child(5n) {
+        color: red;
+      }
+
+      所有的表格都需要设置边框合并
+      table {
+        border-collapse: collapse;
+      }
+
+  3）表单伪类
+  针对表单的状态,比如：表单禁用、选中复选框等
+
+  使用场景:
+    1.表单按钮禁用的时候，调整颜色。
+    2.复选框选中修改样式
+
+    表单伪类               作用
+    :disabled {}         表单禁用
+    :checked {}          选中状态,单选复选按钮
+
+    <button disabled>提交</button>
+
+    button:disabled {
+      background-color: #ccc;
+    }
+
+    input:checked+label {
+        color: red;
+    }
+
+3.伪元素选择器
+  选择元素的特定部分(使用双冒号::)
+  使用场景: 
+    1)让表单里面的 placeholder文字变颜色
+    2)做很多的装饰效果
+    
+   3.1 选择特定部分
+     
+     伪元素选择器                        作用
+    ::first-line                     选择首行
+    ::first-letter                   首字母
+    ::placeholder                    选择input或者 textarea占位符
+
+    选择首行
+    p::first-line {
+        color: red;
+    }
+
+    选择首字母
+    p::first-letter {
+        color: red;
+    }
+
+    选择textarea占位符进行修改
+    textarea::placeholder {
+        color: red;
+    }
+
+    选择特定元素的特定部分(使用双冒号::)
+    2.插入内容
+
+    伪元素选择器                         作用
+    ::before                         元素内插入伪元素，作为第一个元素
+    ::after                          元素内插入伪元素，作为最后一个元素
+
+    div::before {
+        content: "开始";
+        color: red;
+    }
+
+    div::after {
+        content: "结束";
+        color: red;
+    }
+
+    注意：
+      fefore和 after 是插入的伪元素，特性类似内联元素
+      content属性是必须，不能省略，没有内容空引号即可
+      后期非常常用。比如小图标、各种装饰效果
+
+      div::before {
+        content: "开始";
+        color: red;
+      }
+
+    div::after {
+        content: "结束";
+        color: red;
+    }
+
+    4.属性选择器
+      根据元素的属性来精准定位元素，从而实现更灵活的样式控制。
+
+      使用场景：
+        1.表单样式控制。
+        2.图标字体控制
+        3.国际化语言适配等
+
+        属性选择器                        作用
+        [属性]                          匹配包含指定属性的元素
+        [属性=值]                       匹配属性值等于指定值的元素
+        [属性^=值]                      匹配属性值以指定字符串开头的元素
+        [属性$=值]                      匹配属性值以指定字符串结尾的元素
+        [属性*=值]                      匹配属性值包含指定子串的元素
+
+        比如：
+        a[class] {
+            color: red;
+        }
+
+        a[class="font"] {
+
+        }
+
+        a[class^="font"] {
+            color: red;
+        }
+
+        a[class$="font"] {
+            color: red;
+        }
+
+        a[class*="font"] {
+            color: red;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            color: red;
+        }

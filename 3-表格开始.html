@@ -1,0 +1,76 @@
+表格
+
+表格作用：以结构化方式展示行列数据，使信息清晰、易读且易于对比
+
+表格基本组成：
+  标签            作用
+  table         表格容器标签
+  tr            行标签
+  td            单元格标签
+  th            表头单元格 (行和列均可)
+
+<table border="1">
+  <tr>
+    <th>姓名</th>
+    <th>年龄</th>
+  </tr>
+  <tr>
+    <td>111</td>
+    <td>222</td>
+  </tr>
+</table>
+
+
+表格结构标签：增强表格语义，让表格结构更清晰
+
+标签           作用
+thead       定义表格的头部区域
+tbody       定义表格的主体内容
+tfoot       定义表格的底部区域
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>姓名</th>
+    <th>年龄</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td>111</td>
+    <td>222</td>
+  </tr>
+</tbody>
+</table>
+
+合并单元格：
+  原理：
+    1.确定是跨行还是跨列合并
+    2.找到目标单元格（左上原则,左上写，开始，向右下进行合并），写合并数量
+    3.删除多余单元格
+
+
+    <table border="1">
+      <thead>
+      <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr>
+        <td>111</td>
+        <td rowspan="2">222</td>
+      </tr>
+      <tr>
+        <td>111</td>
+        
+      </tr>
+      <tr>
+        
+        <td colspan="2">222</td>
+      </tr>
+    </tbody>
+    </table>

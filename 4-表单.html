@@ -1,0 +1,82 @@
+表单
+表单的核心标签由三部分组成
+
+1.表单容器
+form：定义表单的容器，包裹所有表单控件。默认包含 action属性,action属性定义了在提交表单时，应该把所收集的数据送给谁去处理
+
+<form action=""></form>
+
+2.表单控件
+包含 input通用输入控件、textarea多行文本输入框、select下拉选择框、button自定义按钮等
+
+输入标签input是最常用的表单元素之一，它可以创建文本输入框、密码框、单选框、复选框等。type属性定义了输入框的类型
+
+1).单行文本框/密码框
+<form action="#" autocomplete="on">
+    <input type="text" name="username" placeholder="请输入账号" accesskey="s" autocomplete="on"> 按 s自动定位
+    <input type="password" name="password" placeholder="请输入密码" autocomplete="off">
+    <button type="submit">登录</button>
+</form>
+
+属性：placeholder提示信息，name元素的名称，maxlength允许的最大字数，accesskey使元素获得焦点的快捷键,autocomplete用于控制表单的自动填充行为，帮助浏览器决定是否根据用户历史输入自动填充字段值on
+/ off
+
+2)单选框和复选框
+ type属性值                    说明
+  radio                      单选框
+  checkbox                   复选框
+ 其他属性                      说明
+  name                       表单名称实现分组
+  value                      表单值
+  checked                    是否默认选中
+
+
+  <input type="radio" name="gender" value="0" checked>女
+  <input type="radio" name="gender" value="1">男
+
+  <input type="checkbox" name="hobby" value="0" checked>足球
+  <input type="checkbox" name="hobby" value="1">足球
+  <input type="checkbox" name="hobby" value="2">足球
+
+  文件域file
+  multiple      允许选择多个文件
+  accept        规定选择的文件类型，多个类型中间用逗号分隔
+
+  <input type="file" name="file" multiple accept=".zip, .jpg">
+
+  textarea是一个多行纯文本编辑控件，适用于允许用户输入大量自由格式文本的场景，例如评论或反馈表单，多长文本框也被称为文本域
+  常见属性          说明
+  name            表单名称
+  placeholder     提示信息
+  rows            文本行数，正整数，默认为 2
+  cols            文本列数，正整数，默认为 20
+
+  <textarea name="msg" cols="30" rows="10" placeholder="请输入您的留言"></textarea>
+
+  表单控件 select
+  select元素表示一个提供选项菜单的控件，select元素是容器，option 室内一个选项标签，每个选项要跟一个值
+  要想默认选中一个选项，可以添加 selected 属性
+  <select name="city" id="">
+    <option value="0" selected>北京</option>
+    <option value="1">上海</option>
+    <option value="2">广州</option>
+  </select>
+
+  button标签定义一个按钮。元素内部可以放置内容，比如文本或图像，disabled属性禁用
+
+
+3.辅助标签
+label关联输入控件的文本标签，提升可访问性（点击标签可聚焦输入框）
+
+两种使用方式：
+  方式一：利用for和 id相关联 
+  <label for="nan">男</label>
+  <input type="radio" id="nan" name="sex">
+  方式二：直接包含
+  <label>
+    男
+    <input type="radio" name="sex">
+  </label>
+
+  字符实体
+  字符实体是一段以 & 开头，以 ; 结尾的文本，用于表示特殊字符或无法直接输入的字符。如不换行空格 &nbsp; 小于号 &lt; 大于号 &gt;

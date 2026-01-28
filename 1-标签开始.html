@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDN 前端学习权威网站</title>
+</head>
+<body>
+
+    <h1>前端学习权威网站，MDN</h1>
+
+    <div>
+        <p>
+            <span>文字</span>
+        </p>
+    </div>
+
+    <h1>h1标题</h1>
+    <h2>h2标题</h2>
+    <h3>h3标题</h3>
+    <h4>h4标题</h4>
+    <h5>h5标题</h5>
+    <h6>h6标题</h6>
+    <p>段落标签，会根据屏幕宽度自动换行</p>
+    
+    
+    <strong>加粗标签</strong> <br>
+    <em>斜体标签</em> <br>
+    <del>删除线标签</del> <br>
+    <ins>下划线标签</ins> <br>
+ 
+
+    无语义标签强调与重要性标签：
+    加粗： <b>加粗文字</b>
+    倾斜： <i>倾斜文字</i>
+    下划线： <u>下划线文字</u>
+    删除线： <del>删除线文字</del>
+    
+
+    注释标签： <!-- 注释内容 --> 或者快捷键 crtl+/
+    
+
+html标签分类：块级元素和内联元素，分类不同决定着展示形式不一样
+    块级元素： 
+      块级元素独占一行，可以嵌套其他元素，比如p、h、div等
+    内联元素：
+      可以一行放多个，通常与文本一起使用。
+      不能嵌套块级元素，可以嵌套其他内联元素
+      常见比如strong,em,a等
+
+      注意事项：段落p里面不要放其他块级元素。段落里面主要放文字相关，比如内联元素
+      有问题：
+      <p>
+        <p></p>
+      </p>
+      <p></p>
+
+      元素分类并非一直不可更改，后面可以通过 css改变他们的显示模式
+
+      比如：
+      <h1>块级元素</h1>
+      <strong>内联元素</strong><strong>内联元素</strong>
+    
+      <p><strong>块嵌套内联</strong></p>
+
+
+      HTMl中的图片：
+      语法：<img src="简历.jpg" alt="11111"> 
+      src图片地址，
+      alt属性用于在图片无法显示或者因为网速慢的情况下显示的文字
+      width属性用于设置图片的宽度
+      height属性用于设置图片的高度
+      title图像标题，属性为鼠标悬停图片时显示的文字
+
+      注意：属性为键值对形式。属性='值', 属性之间没有必要的先后顺序，但是属性之间必须要有空格分割
+
+      一般情况下，我们宽度和高度修改其中一个就可以了，剩下的等比例缩放
+      <img src="简历.jpg" width="300"> 
+
+      网页优化：优先WebP/AVIF（兼容时）,备选JPEG/PNG
+      透明图像：PNG（静态）或 WebP（动态）
+      动画：WebP/GIF（简单动画）
+      其他格式：图片还有其他格式，比如 svg,HEIC 等
+
+      路径：
+      相对路径：相对于当前位置的路径
+
+      同一目录：直接使用文件名即可（./表示当前文件夹）
+      <img src="pig.png" alt="这是佩奇">
+      <img src="./pig.png" alt="这是佩奇">
+
+      下级子目录（重点）：使用目录名/文件名
+      <img src="img/pig.png" alt="">
+
+      上级目录：使用../返回上一级
+      <img src="../pig.png" alt="">
+
+      网络地址：<img src="https://img2.baidu.com/it/u=3568343959,553249760&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500">
+
+      视频和音频：
+      <!-- 在h5中如果属性的键和值是相同的，则可以省略值 -->
+      <video src="句号.mp4" controls="controls"  width="300"> </video>
+        controls:显示浏览器自带的播放控件 
+        autoplay:自动播放
+        loop:循环播放
+        muted:静音
+        poster：预览图像，视频封面
+        <!-- 想要自动播放autoplay, 需要先静音 muted，循环播放 loop-->
+
+        视频标签的兼容性写法：
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+            <source src="video.ogg" type="video/ogg">
+            <source src="video.webm" type="video/webm">
+            <p>您的浏览器不支持 HTML 5 Video 标签，请升级浏览器</p>
+        </video>
+
+        1.将 src属性放在几个单独的 source 元素当中，这些元素分别指向各自的资源
+        2.浏览器会检查 source元素，并且播放第一个与其自身相匹配的媒体
+        3.每个 source元素含有 type属性，浏览器也会通过检查这个属性来迅速的跳过那些不支持的格式。如果你没有添加
+        type属性，浏览器会尝试加载每一个文件，直到找到一个能正确播放的格式，但是这样会消耗大量的时间和资源
+
+
+        一种资源写法：
+        <video autoplay muted controls poster="" width="300">
+            <source src="./句号.mp4" type="video/mp4">
+            <p>您的浏览器不支持 HTML 5 Video 标签，请升级浏览器</p>
+        </video>
+
+        <!-- 音频标签浏览器不支持自动播放 可以使用 js实现 -->
+        <audio src="audio.mp3" autoplay muted controls></audio>
+
+        <audio controls>
+            <source src="audio.mp3" type="audio/mp3">
+            <p>您的浏览器不支持 HTML 5 Audio 标签，请升级浏览器</p>
+        </audio>
+
+        超链接
+        超链接能够使我们的文档链接到任何其他文档（或其他资源），也可以连接到文档的指定部分
+        语法：
+        <a href=""></a>
+        <a href="https://www.baidu.com">百度</a>
+        href属性（也称为超文本引用或目标，它将包含一个网址）来创建一个基本链接
+        链接可以包含除了自身之外的其他元素，比如 文字、标题、图片、视频等
+
+        <!-- 1.内部链接 -->
+        <a href="./1-运算符.html">内部跳转</a>
+        <!-- 2.外部链接 -->
+        <a href="https://www.baidu.com" target="_blank">百度</a>
+
+        title属性，鼠标悬停时显示的文字
+        target属性，打开页面的方式，_self当前窗口打开，_blank新窗口打开
+
+        空链接：在 html中，空链接通常指的是没有实际指向目标的超链接，符号是#  <a href="#"></a>
+        下载链接：如果是exe或者压缩包点击是下载 <a href="download.exe"></a> <a href="download.zip"></a>
+        邮件链接：某些简单场景或个人使用情况下使用，公司或流量大的网站慎用，有垃圾邮件等风险，其他方案替代 <a href="mailto:pig@mozilla.org">给我发邮件</a>
+
+        锚点链接：允许一个用户在同一个页面内跳转到指定位置，非常适合长页面导航
+
+        定义锚点目标：使用id属性创建锚点目标，比如<h2 id="1"></h2>
+        创建跳转链接：使用#标记锚点目标，比如：<a href="#1">跳转到第一部分</a>    
+        点击有滑动效果：在head标签里面加一个：html { scroll-behavior: smooth; }
+
+    <script>
+        var a = 123;
+        var b = 234;
+
+        var c = a + 'a';
+        console.log(c);
+        document.write("a");
+        document.write("b");
+    </script>
+</body>
+</html>

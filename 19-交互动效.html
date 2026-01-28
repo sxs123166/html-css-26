@@ -1,0 +1,235 @@
+
+1.变换
+
+
+2.动画
+
+
+3.动效案例
+
+
+
+
+
+一、变换
+CSS transform是元素进行 2D/3D 变换的核心属性，支持平移、旋转、缩放、倾斜等效果，且不破坏原有文档流布局。
+
+基础变换函数-2D
+transform是对元素进行 2D/3D 变换的核心属性，支持平移、旋转、缩放、倾斜等效果，且不破坏原有文档流布局。
+
+
+支持类型                    函数语法                                核心描述                                      应用场景
+平移                     translate(x, y)                      沿 X/Y 轴移动元素，参数可为像素或百分比             微调元素位置，悬停偏移效果
+                        translate(x)                           (百分比相对于元素自身尺寸)
+                        translate(y)                        
+旋转                     rotate(angle)                        以元素中心为基点顺时针旋转，需加单位 deg（负值为逆时针）  图标旋转、卡片翻转
+缩放                     scale(sx, sy)                        X/Y 轴按比例缩放，单参数时等比例缩放                   悬停放大、焦点突出
+                        scale(sx)                            (>1放大，<1缩小，支持百分比)                               
+                        scale(sy)                       
+倾斜                    skew(x-angle, y-angle)               沿 X/Y 轴扭曲元素形状，参数为倾斜角度                   斜切导航栏、动态图表
+                        skew(angle)                         （支持负值）
+                        skew(angle)  
+
+
+1)平移（translate）沿X/Y 轴移动元素位置，不改变元素的实际位置（原位置仍保留空白）
+
+使用场景： 
+ 1. 悬停元素微调
+ 2. 元素居中。元素实现水平垂直居中
+
+ 语法：
+     transform: translate(20px, 30px); x y 同时移动
+     transform: translateX(50%);  X 轴移动
+     transform: translateY(-50%); Y 轴移动
+
+     平移不影响页面布局，仅是视觉上的移动
+     添加鼠标经过元素移动，优先 transform而不是通过 left\top等，性能更佳
+     如果单位是百分比，显得归于元素自身尺寸，而非父容器
+
+
+
+2)旋转（rotate）以元素中心为基点顺时针旋转，需加单位 deg（负值为逆时针）
+
+语法：
+    transform: rotate(45deg);
+
+    参数单位：deg（角度），正值为顺时针，负值为逆时针
+    transform-origin: left top; 旋转的基点
+
+    transform-origin 设置中心旋转点
+
+    属性值支持 left、top等（左上角）.也可以支持数字比如像素和百分比等
+
+    注意：行内元素的布局特性（无法设置宽高、盒模型限制、transform基准异常）会破坏旋转效果的稳定性和准确性，所以文字类要转换行内快或者块级元素。比如字体图标需要转换。
+
+
+3）缩放scale
+  缩放用于调整元素尺寸，且不改变元素在文档留中的原始占位
+语法：
+  transform: scale(1.5) 放大
+  transform: scale(1.5, 1) 放大
+
+  单参数：同时作用于 X轴和 Y 轴（如 scale(2)表示整体放大两倍）
+  双参数：第一个控制 X轴，第二个控制 Y 轴（如 scale(0..5, 1.5)横向缩小 50%，纵向放大 50%）
+
+4）倾斜 skew用于对元素进行二维倾斜变换，通过沿 X 轴或 Y 轴扭曲元素的几何形状
+
+语法：
+  transform: skew(30deg, 10deg);  沿 X 轴倾斜 30 度，沿 Y 轴倾斜 10 度
+  transform: skewX(30deg);  沿 X 轴倾斜 30 度
+  transform: skewY(10deg);  沿 Y 轴倾斜 10 度
+
+  如果只写一个参数则 Y 轴默认为 0
+  transform-origin设置倾斜中心点
+
+
+
+transition完整写法：
+  transition: 过渡属性 持续时间 速度曲线 延迟时间；
+  transition: all 1s linear 1s;
+
+  所有属性添加过渡效果,过度持续 1s，匀速，延迟 1 秒执行
+
+  速度曲线参数                     效果描述
+  ease                             慢速开始，加速，慢速结束（默认）
+  linear                            匀速
+  ease-in                          加速开始，慢速结束
+  ease-out                         慢速开始，加速结束
+  ease-in-out                      加速开始，减速结束
+  cubic-bezier(x1, y1, x2, y2)     贝塞尔曲线。通过四值 0-1 范围内自定义速度曲线，实现弹跳、骤停等创意效果。
+
+
+  cubic-bezier.com： 可视化编辑贝塞尔曲线
+  easings.net： 获取常用缓动函数的预设值
+  谷歌浏览器调试
+
+transform的复合写法
+
+ 语法：
+   transform: A() B() C();
+
+   顺序：从右到左
+
+
+3D 变换与透视
+
+场景：
+  1.卡片翻转效果
+  2.3D 幻灯片/轮播图
+  3.数据可视化。立体图表（如 3D 柱状图）等
+
+  相比 js和 WebGL, CSS 3D利用 GPU 加速，动画更流畅，性能更高效。
+
+  三维坐标系：x轴右边为正值，y轴下方为正值，z轴接近屏幕是正值。
+
+  旋转 rotate通过改变元素在 3D 空间中的角度，实现元素的三维旋转效果。
+
+  语法：
+    transform: rotateX(45deg);  绕 X 轴旋转 45 度
+    transform: rotateY(45deg);  绕 Y 轴旋转 45 度
+    transform: rotateZ(45deg);  绕 Z 轴旋转 45 度（与 rotate 相同）
+
+    参数单位：deg（角度），正值为顺时针，负值为逆时针
+    rotateZ 和 rotate 效果相同，都是绕 Z 轴旋转。
+
+    transform: translate3d(x, y, z);  同时沿 X/Y/Z 轴平移元素位置
+
+
+透视 perspective
+  在 CSS 中，透视效果 Perspective用于用于模拟人眼观察 3D 空间时的近大远小效果。（注意，实现近大远小效果，）
+  比如绕 x轴旋转一定角度，上面远，则小（大小更短），下面近，则大（大小更大）
+  语法：
+    perspective: 500px; 
+
+    数值越小，透视效果越强
+    给父元素添加，里面所有子元素都会添加透视效果（常用）
+    给子元素添加，当前元素添加透视效果
+
+    transform： perspective(1000px) rotateX(45deg); 同时使用多个属性。
+    
+    注意：perspective()必须作为 transform属性的第一个函数（否则无效）
+
+    backface-visibility: hidden;  隐藏元素背面，避免看到翻转后的内容
+
+    
+    3D 位移
+      CSS 3D平移函数 translateZ()与 translate3d()
+
+      语法：transform: translateZ(200px);  沿 Z 轴平移 200 像素
+      
+      沿 Z轴（垂直于屏幕方向）平移元素，实现近大远小的立体效果。
+      正值元素靠近观察者（放大），负值远离观察者（缩小）
+      需父容器设置perspective属性，否则无效。
+
+    父元素设置 transform-style: preserve-3d；使子元素保留 3D 位置（如 3D 卡片翻转）
+
+    语法：transform-style: preserve-3d;
+    默认 flat会将子元素压平
+
+
+动画animation
+CSS 的 animation是一种通过定义关键帧和动画属性来实现元素动态效果的技术
+
+优势：
+  - 性能高效：浏览器原生支持，利用 GPU 加速渲染，避免频繁的 js计算开销
+  - 代码简洁：解决了传统 CSS 过渡（transition）只能定义两帧状态的局限性。可以利用关键帧实现更复杂动画
+  - 交互增强：支持域用户操作（入选厅、点击）结合，提升网页的动态表现力和用户体验
+
+  关键帧：关键帧是动画和视频制作中用于定义动作或状态变化的核心节点，他决定了动画的启示、转折和结束状态。中间帧（插帧）通过算法自动生成，形成连贯的动画效果
+
+  动画使用：先定义动画，后使用动画
+
+  1.定义动画
+    @keyframes 动画名称 {
+      0% { 动画起始状态 }
+      50% { 动画中间状态 }
+      100% { 动画结束状态 }
+    }
+
+    @keyframes 动画名称 {
+      from { 动画起始状态 }   相当于 0%
+      to { 动画结束状态 }    相当于 100%
+    }
+
+
+    2.使用动画
+      animation: 动画名称 持续时间 速度曲线 延迟时间 播放次数 是否反向播放 执行完毕状态;
+      animation: 动画名称 1s linear 1s 1 normal;  动画名称 1s 匀速 1s 延迟 1 次 正常播放
+
+      动画属性要写到目标元素里面
+
+      动画名称和动画时长是必写，其余可以省略，但是要保证书写顺序
+
+      子属性                            默认值                               说明
+      播放次数                             1                                播放次数，infinite 无限循环
+      是否反向播放                        normal                             播放方向，可选 reverse(反向)、alternate(交替播放)     
+      执行完毕状态                         none                              动画结束后状态（如 forwards保留最后一帧，backwards回到第一帧）
+
+      也可单写属性，到时查询即可，注意 animation-play-state 暂停货继续动画，需单独设置 paused暂停动画
+
+
+steps逐帧动画：
+  速度曲线 除了常见的 linear、ease、cubic-bezier() 等，还可以使用 steps() 函数实现逐帧动画,还包含 steps函数，steps是 CSS 动画中用于控制动画分段执行的计时函数
+  他通过将动画分割为离散的步骤，实现类似传统帧动画（逐帧动画）的跳跃效果。
+
+  语法：
+    animation: move 1s steps(8) infinite;  1s 持续时间，8 表示将动画分为 8 个步骤，infinite 无限循环
+
+    steps（步数），步数为正整数
+    经常和背景图片（精灵图）来实现动画效果
+
+    1.移动图片。其实是通过变化背景位置，移动距离就是图片宽度
+    2.图片有N个不同图形，steps（步数就写）N
+
+
+    @keyframes move {
+      0% { background-position: 0px 0px; }
+      100% { background-position: -800px 0px; }
+    }
+
+    .box {
+        animation: move 1s steps(8) infinite;
+    }
+      
+
+

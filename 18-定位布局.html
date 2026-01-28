@@ -1,0 +1,308 @@
+定位布局
+
+CSS 定位布局是控制元素在页面中位置的核心技术之一。通过定位,可以实现元素脱离文档流、层叠、固定在特定位置布局效果（定位和位置有关）
+
+场景：
+  1. 固定导航栏：将导航栏固定在页面顶部，使用户无论滚动到页面的哪个位置，都能方便地访问导航菜单。
+  2. 弹出层：在页面上创建一个弹出层，用于显示额外的信息、表单或其他交互元素。
+  3. 图片轮播：在图片轮播中，使用定位布局将图片和控制按钮固定在页面的特定位置，实现自动切换或手动控制。
+  4. 固定侧边栏：将侧边栏固定在页面的一侧，使用户能够方便地访问侧边栏上的导航链接或其他内容。
+
+定位分类：相对定位  绝对定位  固定定位  粘性定位
+
+CSS 相对定位是布局中常用的定位方式，其核心在于元素相对于自身正常位置进行偏移。
+
+场景：和绝对定位搭配使用。主要作用是给绝对定位当爹的
+
+语法：position: relative; 设置元素为相对定位
+  相对于自身原来位置移动距离
+  不脱离正常流，元素原位置仍被保留，其他元素按原布局排列
+  可以通过top、bottom、left、right属性进行偏移
+  优先级：做同时设置top和 bottom，仅 top生效；同理 left覆盖 right。
+
+
+绝对定位：CSS 绝对定位核心是脱离正常流并给予定位基准进行偏移。
+
+场景：
+1.弹出菜单/下拉框。鼠标悬停时显示浮动菜单
+2.悬浮效果。元素悬浮在其他元素上方。
+
+语法：position: absolute; 设置元素为绝对定位
+  脱离正常流，不占据空间，其他元素按原布局排列
+  相对于最近的已定位祖先元素(position非 static)移动位置。若都无定位则相对于市口来定位
+  可以通过top、bottom、left、right属性进行偏移
+  优先级：若同时设置top和bottom，仅 top生效；同理 left覆盖 right。
+
+
+  定位：子绝父相
+
+  场景：1.弹出菜单/下拉框。鼠标悬停时显示浮动菜单。 2.悬浮效果。元素悬浮在其他元素上方。
+
+  为什么是子绝父相：
+    1.子元素可以悬浮其他元素上方，就不能占有位置，影响其他元素布局，所以绝对定位。
+    2.但是子元素不能随便乱跑，要配合父元素移动位置，此时父元素需要加定位
+    3.父元素需要占原来的位置，不能影响其他元素布局，此时相对定位最合适。
+
+    .father {
+        position: relative;
+    }
+
+    .son {
+        position: absolute;
+    }
+
+固定定位 
+  CSS 固定定位是一种将元素脱离文档流并始终相对于浏览器市口定位的布局技术。
+  
+  场景：1.固定导航栏。 2.固定侧边栏。 3.固定弹窗。
+
+  语法：position: fixed; 设置元素为固定定位
+    - 元素脱离正常流，不占据空间，其他元素按原布局排列
+    - 始终相对于浏览器窗口（视口）定位，滚动页面时位置不变
+    - 可以通过 top、bottom、left、right 属性进行偏移
+    - 优先级：若同时设置 top 和 bottom，仅 top 生效；同理 left 覆盖 right。
+
+ 
+粘性定位
+  CSS 粘性定位position: sticky是一种 混合定位模式（相对于父亲粘性），结合了现代规定为和固定定位的特性
+  
+  场景: 1.吸顶效果 2.表格表头固定
+
+  语法：position: sticky; 设置元素为粘性定位
+    - 元素在滚动到指定位置（如top: 10px）之前为现代规定为，之后转为固定定位
+    - 父容器的 overflow 需为 visiable，否则粘性定位失效
+    - 可以通过top、bottom、left、right属性进行偏移
+    - 必指定 top、right、bottom或 left 四个其中之一，才可使粘性定位生效
+
+定位布局-层叠顺序
+  z-index属性用于控制元素在三维空间中的层叠顺序（即 Z 轴方向）。当多个元素在同一个平面（如同一行或列）重叠时，z-index决定那个元素在最上层。
+
+  场景：1.提高层级悬浮效果  2. 实现图片层叠效果
+
+  语法：z-index:数值;  设定层级
+    - 值类型：整数（正数、负数、零）或 auto。数值越大，层级越高
+    - 默认值：auto(等同于未设置，后出现的元素覆盖前者)
+    - 生效条件：仅对定位元素（position值为relative、absolute、fixed、sticky）有效
+
+
+    定位类型             脱离文档流                      定位基准               层叠控制                典型场景
+    static                否                           默认文档流              无                    普通元素布局
+    relative              否                          自身正常位置             支持                   微调元素、子绝父相
+    absolute              是                          最近定位祖先/视口         支持                    弹窗、下拉菜单、悬浮元素
+    fixed                 是                          视口                    支持                    固定导航栏、返回顶部按钮
+    sticky                否                          视口或滚动祖先            支持                    吸顶导航栏、侧边栏固定
+
+    定位属性：
+      position: (relative|absolute|fixed|sticky|static);
+      偏移属性：top、bottom、left、right控制偏移量
+      z-index: 控制层叠顺序，数值越大，层级越高
+
+      常见组合
+        - 固定导航栏：position: fixed + z-index
+        - 弹窗：position: position:fixed + 居中技巧 + 高 z-index
+        - 吸顶效果：position: sticky + top:0
+
+
+网格布局
+  二维，可以同时控制行和列的排列。实现真正的二维布局。
+  网格布局是一种二维模型，允许开发者通过定义行和列来精确控制网页元素的位置和尺寸。还可以实现响应式设计。
+
+实际开发大部分是两者混用的：
+  1.Flexbox：适合快速实现一维布局、动态内容对齐。比如单行布局
+  2.Grid：适合构建复杂页面框架，提供更强大的二维控制能力。比如多列或者响应式等
+  
+网格布局基本概念
+    <section>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </section>
+
+    网格布局的核心：创建好网格并放入各类元素
+
+  网格容器
+    容器（父盒子）设置display: grid;(块级)或者 display: inline-grid;(行内)
+    与弹性盒子不同的是，在定义网格后，网页并不会马上发生变化。因为 display: grid 的生命只创建了一个只有一列的网格。
+
+  网格轨道
+    网格轨道决定了网格容器的基础布局结构，微子元素提供放置的位置。
+    绘制网格：（网格轨道）
+      grid-template-columns: 定义网格中的列
+      grid-template-rows: 定义网格中的行
+      属性值：
+        - 有几个属性值代表创建几行/列
+        - 长度单位 比如 100px
+
+        grid-template-columns: 100px 100px 100px;  /* 定义三列，每列宽度为 100px */
+        grid-template-rows: 100px 100px 100px;  /* 定义三行，每行高度为 100px */
+
+  网格轨道-对齐方式 justify-content  align-content 
+  justify-content 是控制列轨道 在容器内的水平分布
+  align-content 是控制行轨道 在容器内的水平分布
+  
+  属性值                            水平方向效果                            垂直方向效果
+  start                            左对齐                                  顶部对齐
+  end                              右对齐                                  底部对齐
+  center                           水平居中对齐                                垂直居中居中对齐
+  space-around                    两侧留出相等的空白，项目周围空间均匀分布        上下留出相等的空白，项目周围空间均匀分布
+  space-between                   首尾项目贴边                                上下项目贴边
+  space-evenly                    项目间、首尾与边界的空白相等                   项目间、首尾与边界的空白相等
+
+  绘制网络：（网格轨道）
+  grid-template-columns / grid-template-rows 属性值
+
+  属性值                    说明                                                 示例                                         应用场景
+  固定长度                使用px、em等固定单位定义列宽/行高                   grid-template-columns: 100px 200px;              需要精确控制列宽的固定布局
+  百分比                  按容器宽度百分比分配列宽                            grid-template-columns: 50% 50%;                 响应式布局中按比例分配
+  fr 单位        分配轨道剩余空间的比例（1fr表示一份，总和为容器剩余空间），fr是 fraction缩写，意思是分数    grid-template-columns: 1fr 2fr;           需要自适应比例分配布局
+  auto                 列宽内容自动撑开                                    grid-template-columns: auto 100px;              内容宽度不确定时的灵活布局
+  repeat()布局         简化重复的列定义                                     grid-template-columns: repeat(3, 1fr);（等效于 1fr 1fr 1fr）          多列等宽布局
+  minmax()函数          定义列宽的最小值和最大值                             grid-template-columns: minmax(100px, 1fr) 1fr;  列宽范围在100px到1fr之间
+
+  网格间距
+    gap简写属性用于设置行和列之间的间隙（网格间距）
+    使用场景：让元素之间保留间隙
+
+    语法：
+      - gap: 20px; 行和列之间保持 20 像素间距。
+      - gap: 10px 20px; 行间距为 10 像素，列间距为 20 像素。
+    
+    注意：gap是简写形式也可以分开 column-gap 30px; row-gap 20px;
+
+    repeat()函数
+      语法：repeat(重复次数, 轨道尺寸) 或 repeat(自动填充, 轨道尺寸)
+
+      1.固定次数 grid-template-columns: repeat(3, 1fr);  /* 定义三列，每列宽度为 1fr */
+
+      .nav {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+      }
+
+    repeat(自动填充, 轨道尺寸)
+
+    2.自动填充: 适用于响应式布局中 “列数水容器宽度变化” 的场景。
+      auto-fill: 尽可能多地创建列
+      auto-fit: 尽可能拉伸列填满容器（会合并空白， 列宽不小于 minmax的最小值）
+
+      区别：当容器空间远远大于所有子元素大小， auto-fill流油空白空间， auto-fit会拉伸盒子占满父容器空间
+
+      minmax()函数
+      语法：minmax(最小值, 最大值)  minmax(100px, 1fr)
+
+
+      .box {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  // 最小 100px， 最大 1fr
+        gap: 10px;
+      }
+
+  网格线    
+    使用场景：实现元素跨越多个网格单元
+
+    实现元素跨越多个网格单元
+      实现语法1：
+        1） 跨列：grid-column: 开始线编号/结束线编号
+        2） 跨行：grid-row: 开始线编号/结束线编号
+
+        background-color: pink;
+        grid-column: 1/3;  // 1/3 表示从第一列到第三列
+        grid-row: 1/3;  // 1/3 表示从第一行到第三行
+
+        实现语法 2：
+          1） 跨列：grid-column: 开始线编号 / span 跨单元格的数量
+          2） 跨行：grid-row: 开始线编号 / span 跨单元格的数量
+
+          background-color: pink;
+          grid-column: 1/ span 2;  // 从 1 线开始跨 2 个单元格
+          grid-row: 1/ span 2;  // 从 1 线开始跨 2 个单元格
+
+      注意：该元素要写到项目（子元素）身上
+
+      .box .item:nth-child(1) {
+        background-color: pink;
+        grid-column: 1/ 3;  // 从 1 线开始跨 2 个单元格   span十几个单元格的意思
+        grid-row: 1/ 3;  // 从 1 线开始跨 2 个单元格
+        height: auto; // 或合并后盒子应有的高度
+      }
+
+
+  网格填充方式
+    grid-auto-flow决定网格容器中子元素排列填充方式
+    
+    语法：
+      1）grid-auto-flow: row;  子元素按先行后列顺序填充，优先填满一行后换行
+      2）grid-auto-flow: column;  子元素按先列后行顺序填充，优先填满一列后换行
+
+  object-fit
+    object-fit是 CSS 中用于控制替换元素（如<img>,<video>, <iframe>等加载外部资源的元素）的内容如何适应其容器尺寸的属性。
+    
+    值                                                  描述  
+  fill                                        默认值。拉伸内容以完全填充容器，不保持宽高比，可能导致内容变形（最常用但需谨慎）
+  contain                                     保持内容固有宽高比，缩放只完全适应容器内部（内容完全可见），容器可能有空白（类似适应模式）
+  cover                                       保持内容固有宽高比，缩放完全覆盖容器（内容可能部分被裁剪），容器无空白（类似填充模式）
+  
+  object-position: object-position控制内容在容器内的对齐位置（如 center居中、top left左上角），常与 object-fit搭配使用（例如 cover时调整裁剪区域）  50% 20%与 center是一个意思
+
+
+  项目对齐方式
+    在 CSS Grid布局中，控制元素在网格内的对齐方式。
+
+    语法：
+      1）justify-items: 水平对齐方式;  控制项目在网格单元格内的水平对齐方式（如 center居中、start左对齐）
+      2）align-items: 垂直对齐方式;  控制项目在网格单元格内的垂直对齐方式（如 center居中、start上对齐）
+      3）place-items: 水平对齐方式 垂直对齐方式;  同时设置项目在网格单元格内的水平和垂直对齐方式（如 center center居中对齐）
+
+      场景：元素在网格内对齐
+      注意：给父元素添加
+
+      属性值                      水平方向效果                                    垂直方向效果                      代码示例
+      start                     对齐单元格起始边缘（左对齐）                   对齐单元格起始边缘（顶部对齐）         .container { justify-content: start }
+      end                       对齐单元格结束边缘（右对齐）                   对齐单元格结束边缘（底部对齐）         .container { justify-content: end }
+      center                    对齐单元格中心（水平居中）                   对齐单元格中心（垂直居中）             .container { justify-content: center }
+      stretch                   拉伸项目以填充单元格（默认值）               拉伸项目以填充单元格（默认值）         .container { justify-content: stretch }
+
+
+
+
+  多列等宽
+    多列布局用于将元素的内容 自动分割为指定数量的垂直列 grid和 flex 纵向需要包装一个盒子， 这个不需要
+    
+    属性                                      作用                                        示例值
+    column-count         列数;  指定网格容器应创建的垂直列数（例如 3 列），自动分配列宽         .container { column-count: 3 }
+    column-gap           列之间的间距                                                   20px、normal（默认 1em）
+    column-rule          列间的分割线样式（颜色、宽度、样式）                               column-rule: 1px solid #ccc;
+
+    .box {
+      column-count: 3;
+      column-gap: 20px;
+      column-rule: 1px solid #ccc;
+    }
+
+
+    注意：底部子元素被切断。
+    原因：column-count的本质是将内容按垂直方向自动分割到多列（类似报纸排版），内容会优先填满一列后再流入下一列
+
+    解决方案：break-inside: avoid-column; 强制元素不跨列分割（默认 auto,允许跨列）给子元素添加
+
+
+    在 CSS 中，cursor属性用于控制鼠标指针在元素上的显示样式，通过改变光标形态可以向用户传递交互提示（如可点击，不可选中等），从而提升界面交互体验
+
+    .box {
+      cursor: pointer;
+    }
+
+
+
+    CSS书写顺序
+      合理的属性顺序应遵循 布局->盒模型->视觉->交互->其他,核心目标是让代码易读、易维护。
+
+      顺序                                                                                            常见属性列表
+    布局相关
+    盒模型
+    视觉样式
+    交互与动画
+    其他（特殊/低频）

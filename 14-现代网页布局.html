@@ -1,0 +1,243 @@
+现代网页布局
+
+1.normal 正常布局
+2.display 模式转换布局
+3.flexbox 弹性布局
+4.grid 网页布局
+5.position 定位布局
+6.column 多列布局
+
+每种技术都有他们的用途，各有优缺点，相互辅助
+
+简单布局：优先使用 Flexbox(一维)或 Grid（二维）
+复杂响应布局式布局：使用 Grid+媒体查询
+文本内容分栏：多列布局（column-count）
+兼容旧浏览器：浮动布局或 Flexbox的降级方案
+CSS Grid逐渐成为主流，支持更负责的布局场景
+
+1.CSS 正常布局流
+  正常布局流(normal flow)是指在不对页面进行任何布局控制时，浏览器默认的 HTML 布局方式。也称为标准流。
+  正常布局流是 CSS 布局的基石，页面大的布局基本就是利用区块元素上下罗列而成。
+
+  区块元素（block）
+  - 独占一行，宽度撑满父容器
+  - 垂直方向排列，可设置宽高
+  - 示例：div、p、h1等
+
+  行内元素
+  - 水平方向依次排列，直到容器宽度不足则换行
+  - 宽度和高度有内容决定，无法直接设置
+  - 示例：span、img、strong等
+
+  文档流方向
+  - 默认从上到下、从左到右排列。
+
+  display显示属性
+  正常流中的所有内容都有一个 display的属性，用作元素的默认行为方式。
+
+  display转换
+  display属性允许我们更改默认的显示方式
+
+  display:block; 转换为区块元素（常见）
+  display: inline; 转换为行内元素（函见）
+  display: inline-block; 转换为行内块元素（较少）
+
+  属性值                    是否独占一行                   能否设置宽高                默认宽度
+  display:block               是                           可以                   撑满父容器宽度 
+  display:inline              否                          不可以                   由内容决定
+  display:inline-block        否                           可以                    由内容决定(可覆盖)
+
+  表单元素默认inline-block,其他元素想要转换可以:display:inline-block;
+
+  使用场景：
+    - 让块级盒子一行显示
+    - 让行内盒子具备宽度高度
+    
+  
+    表单元素默认 inline-block,其他元素想要转换可以： display:inline-block;
+    使用场景：让块级盒子一行显示，让行内盒子具备宽度高度
+
+    注意：
+      1.行内块元素中间会有空白缝隙。给父元素字号改为 0可以去掉。(因为标签换行会有空白字符)
+      2.实际开发适合于对间距要求不高的情况下可以转换
+      3.如果真的要精细布局，请用 flex或者 grid更合适
+
+浮动
+浮动可以让元素脱离文档流，向左或向右浮动，直到碰到父容器边缘或者其他浮动元素。
+
+属性值                      作用                    示例
+left                       左侧浮动                float:left
+right                      右侧浮动                float:right
+none                       不浮动                  float:none
+
+浮动可以让元素脱离文档流，影响周围元素的布局
+
+脱离文档流：盒子上浮其他文档流（标准流）上，浮动的盒子不占位置
+
+浮动带来的影响：
+  1.父盒子没有高度(很多情况下不能给父亲指定高度)
+  2.子元素浮动
+  3.影响其他盒子布局了
+
+清除浮动也可以理解为闭合浮动，，简单来说，就是让浮动的元素尽量控制在父盒子内，不要影响其他盒子。
+
+浮动-清除浮动
+清除浮动主要有四种方式：
+  1.额外标签法：在浮动元素的最后面，新增一个块级标签。添加属性：clear:both;
+  2.单伪元素清除浮动：父元素添加伪元素。
+   .clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0;
+   }
+  3.双伪元素清除浮动：父元素添加双伪元素
+  .clearfix:after, .clearfix:before {
+    content: " ";
+    display: table;
+  }
+
+  .clearfix:after {
+    clear: both;
+  }
+
+  4.overflow清除浮动：父元素添加属性 overflow:hidden;
+
+
+弹性盒子
+  Flexbox 是 CSS 弹性盒子布局模块的缩写，可以快速实现元素的对齐、分布和空间分配。
+  弹性盒子核心：
+    1.父控子（亲父子）
+      父盒子控制子盒子如何排列布局
+      父盒子称为容器，子盒子称为项目
+    2.主轴和交叉轴
+      主轴默认水平方向，交叉轴默认垂直方向，可以更改
+      
+    
+    容器（父盒子）属性
+    
+    属性                  作用                                 示例
+    display            定义元素为 Flex容器                     .container{ display:flex; }
+    flex-direction     定义主轴方向(项目排列方向)                .container{ flex-direction:row; }
+    flex-wrap          控制是否换行                            .container{ flex-wrap:wrap; }
+    justify-content    定义项目在主轴上的对齐方式(整体分布)        .container{ justify-content:center; }
+    align-items        定义交叉轴上的对齐方式（单行是整体对齐）      .container{ align-items:center; }
+    align-content      定义多行时交叉轴上的对齐方式（仅当 flex-wrap:wrap且内容换行是生效）    .container{ align-content:space-between; }
+
+    项目（子盒子）属性
+
+    属性                  作用                                          示例
+    order               定义项目的排列顺序（默认 0,数值越小越靠前）      .item{ order:-1; }
+    flex-grow           定义项目的放大比例（默认 0，即不放大）          .item{ flex-grow:1; }
+    flex-shrink         定义项目的缩小比例（默认 1，空间不足时等比缩小）   .item{ flex-shrink:0; }
+    flex-basis          定义项目在主轴方向上的初始大小（优先级高于 width/height） .item flex-basis: 200px
+    flex                flex-grow、flex-shrink、flex-basis                 .item{flex:1;}    
+    align-self          覆盖容器的 align-items，单独定义某项目交叉轴对齐方式     .item{ align-self:center; }
+
+
+    容器设置 display:flex; 后,可以让子盒子按照主轴方式排列
+      - 如果子元素有大小，则按照给定大小来显示
+      - 如果子元素没有大小，则（高度）（不指定高度默认拉伸)拉伸充满父容器
+      - 若子元素总宽度超过容器宽度，默认会压缩子元素
+
+      开发中大部分情况下，父容器设置 display: flex，子元素设定大小。
+
+
+  justify-content 定义项目在主轴上的对齐方式
+     
+      属性值               效果                  示例
+     flex-start           左对齐                子元素靠左排列
+     flex-end             右对齐              子元素靠右排列
+     center               居中对齐            子元素居中排列
+     space-between        两端对齐      首个子元素放置于起点，末尾元素放置于终点 A--B--C
+     space-around         项目两侧间隔相等      每个子元素周围分配相同的空间 -A--B--C-
+     space-evenly         项目均匀分布         每个子元素之间的间隔相等    --A--B--C--
+
+
+  align-items 定义项目在交叉轴上的对齐方式（只针对单行）
+
+      属性值               效果                  示例
+     flex-start           上对齐                子元素靠上排列
+     flex-end             下对齐                子元素靠下排列
+     center               居中对齐                子元素居中排列
+     baseline             项目拉伸填充整个容器高度            
+
+   flex-direction定义主轴方向（改变主轴方向,主轴居中对齐，交叉轴居中对齐）
+
+   属性值               描述                                示例效果           代码示例
+   row                默认值。子元素沿水平主轴（从左到右）      A B C(横向排列)    .container{ flex-direction:row; }
+   row-reverse        子元素沿水平主轴反向排列（从右到左）      C B A(反向横向排列)    .container{ flex-direction:row-reverse; }
+   column              子元素沿垂直主轴(从上到下)排列          A                    .container { flex-direction:column; }
+                                                          B
+                                                          C
+  column-reverse      子元素沿垂直主轴反向排列（从下到上）      C                    .container { flex-direction:column-reverse; }
+                                                          B
+                                                          A
+
+  行内盒子设置了 flex，都可以直接给宽高。如 a标签 
+  
+  
+  flex-wrap控制是否换行
+
+   属性值               描述                                示例效果           代码示例
+   nowrap              默认值。不换行                        A B C(不换行)    .container{ flex-wrap:nowrap; }
+   wrap                换行，第一行在上方                   A
+                                                          B
+                                                          C
+   wrap-reverse        换行，第一行在下方                   C
+                                                          B
+                                                          A
+                                                          
+align-content定义多行时交叉轴上的对齐方式（仅当 flex-wrap:wrap且内容换行是生效） 
+
+属性值               效果                  示例
+flex-start           上对齐                子元素靠上排列
+flex-end             下对齐                子元素靠下排列
+center               居中对齐                子元素居中排列
+space-between        两端对齐      首个子元素放置于起点，末尾元素放置于终点 A--B--C
+space-around         项目两侧间隔相等      每个子元素周围分配相同的空间 -A--B--C-
+space-evenly         项目均匀分布         每个子元素之间的间隔相等    --A--B--C--
+
+开发中大部分情况下，该属性使用较少，大部分子元素顺序排列即可
+
+
+项目（子盒子）属性
+子元素的属性用于控制自身的尺寸、顺序或对齐方式。
+
+语法：flex: 1; 剩余空间占 1 分，并且可以伸缩盒子大小  数字表示剩余空间所占份数。正整数。
+
+
+项目（子盒子）属性
+子元素的属性用于控制自身的尺寸、顺序或对齐方式。
+
+ 属性                                       作用                                                              示例
+ flex-grow                             定义子元素剩余空间分配放大比例（默认 0，即不放大）                         .item { flex-grow: 1; }
+ flex-shrink                           定义子元素空间剩余空间分配缩小比例（默认 1，空间不足时等比缩小，0 为不缩小）   .item { flex-shrink: 0; }
+ flex-basis                            定义项目在主轴方向上的初始大小（默认auto,优先级高于 width/height）         .item { flex-basis: 200px; }   
+ flex                                  flex-grow、flex-shrink、flex-basis的简写                             .item { flex: 1; }
+                                       flex: 1-> 1 1 0%(等比放大/收缩,初始无基准尺寸)
+                                       flex: 2-> 2 1 0%(等比放大/收缩,初始无基准尺寸) 
+  align-self                           覆盖容器的 align-items属性，单独定义某个项目的交叉轴对齐方式                 .item { align-self: center }
+  order                                定义项目的排列顺序（默认值为0，数值越小，排列越靠前）                        .item { order: -1; }
+
+  gap间距
+  gap简写属性用于设置行与列之间的间距
+  使用场景：让元素之间保留间隙
+
+  语法：
+    gap: 20px; 行业列之间保持 20 像素间隙
+    gap: 20px 30px; 行间距时 20 像素，列间距是 30 像素。
+
+    注意：gap是写到父元素（容器上）
+
+  垂直对齐-解决图片底部空白缝隙的问题
+  
+  基线：浏览器行内元素（行内块元素）排版中存在用于对齐的基线
+  解决方法：
+    1.把图片转换为块级元素
+      display: block;
+    2.设置图片对齐方式不是基线对齐即可  baseline   top    middle    bottom
+      img {
+        vertical-align: top;
+      }

@@ -1,0 +1,31 @@
+精灵图
+
+CSS 精灵图(CSS Sprites)是将多个小图标或图像合并到一张大图中，通过调整 backgroun-position属性来显示特定部分的图像技术
+
+复杂彩色小图标更适合精灵图。
+
+优势：
+  - 减少 HTTP 请求：多个小图标合并为一张图片，只需一次请求。
+  - 提升性能：减少网络开销，尤其适合移动端或低带宽场景
+  - 统一管理：方便维护图标集，避免文件分散
+
+通过合理使用 CSS 精灵图，可以有效优化网页性能。对于复杂场景（如高清屏适配），建议结合 SVG 或字体图标使用。
+
+原理：
+  1.给盒子添加背景图片
+  2.通过北京定位移动位置对齐(d-posotion)移动位置对齐
+  3.注意网页坐标不同
+
+  .box1 {
+    width: 27px;
+    height: 26px;
+
+    background: url(./img/wz.webp) no-repeat 0 -169px;
+  }
+
+ .box2 {
+       width: 27px;
+    height: 26px;
+
+    background: url(./img/wz.webp) no-repeat -90px -170px;
+ }

@@ -1,0 +1,69 @@
+CSS 优先级
+浏览器通过优先级来判断哪些属性值与一个元素最为相关。优先级是基于不同种类选择器组成的匹配规则。
+原则：
+1.优先级相等的时候，CSS 中最后的那个生命的样式将会被应用到元素上。（层叠遵循就近原则）
+2.其余判断那个选择器权重高，优先执行那个样式。
+3.权重是 4 位一组，是分开的层级，不能进位。
+
+选择器类型          示例                           权重值                  优先级说明
+!important       color:red !important           无限大                强制覆盖所有规则(慎用)
+内联样式           <div style="color:red;">    (1,0,0,0)            行内样式权重最高（1，0,0,0）
+ID 选择器          #myid                         (0,1,0,0)            每个 ID 增加 0,1,0,0
+类/属性/伪类       .class,[type="text"]           (0,0,1,0)            每个类/属性/伪类增加 0,0,1,0
+类型（标签）/伪元素   div,::after                  (0,0,0,1)            每个标签/伪元素增加 0,0,0,1
+通配符/继承          *,继承的样式                  (0,0,0,0)            通配符和继承权重最低
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="box" id="header" style="color: pink;"></div>
+</body>
+</html>
+
+权重叠加:
+  权重是累加的，每个选择器的层级权重相加
+  #nav .item a的权重为?
+    0,1,0,0   id
+    0,0,1,0   类
+    0,0,0,1   类型(元素)
+=   
+    0,1,1,1
+
+继承的权重为0
+<p><span>文字</span></p>    
+
+span {
+    
+}
+
+p {
+    color: red;
+}
+
+// 不生效
+header {
+    font-weight: 400;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+.nav ul li a {
+    color: red;
+    text-decoration: none;
+}
+
+比如h和链接 浏览器都有自己默认的样式，所以继承不生效
+<header>
+    <h1>我是一级标题</h1>
+</header>
+

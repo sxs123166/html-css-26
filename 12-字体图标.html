@@ -1,0 +1,39 @@
+字体图标
+
+字体图标是一种将图标一再提醒是嵌入网页的技术，允许开发者像使用文字一样通过 CSS 控制图标的样式（如颜色、大小、阴影等）
+
+优势：
+  - 矢量缩放：无损放大缩小
+  - 样式灵活：通过 CSS直接修改颜色、大小、阴影等属性。
+  - 减少 HTTP 请求：一个字体文件可包含多个图标、比多张图片更高效
+  - 兼容性好：支持现代所有浏览器，甚至支持部分旧版浏览器
+ 
+图标库                    特点                                     官网链接
+Font Awesome           图标最全、支持免费版和 pro付费版             fontawesome.com
+Bootstrap Icons        bootstrap生态内图标，简单易用               icons.getbootstrap.com
+iconmoon               IconMoon最早推出了第一个自定义图标字体生成器   iconmoon.io
+iconfont               阿里字体库，包含淘宝图标库和阿里妈妈图标库（免费） https://www.iconfont.cn/
+
+
+步骤 
+ - 下载字体图标文件
+   去官网或者设计师准备字体图标文件，保存到项目目录下
+
+  - 引入html中
+    根据提供的压缩包，引入 CSS 文件（link方式） 
+
+  - 使用字体图标
+    一般情况下，我们通过标签调用雷鸣选择对应字体图标。根据实际需求，调整字体样式，比如颜色，大小，位置等
+    
+    
+    建议使用 Font class方式引入
+
+    <link rel="stylesheet" href="./iconfont.css">
+    
+    .iconfont {
+        font-size: 32px;
+        color: red;
+    }
+
+
+    <span class="iconfont icon-good"></span>
